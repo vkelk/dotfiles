@@ -6,7 +6,8 @@ sudo apt-get update && sudo apt-get install -y \
 	rsync \
 	unzip \
 	htop \
-	python3-pip
+	python3-pip \
+	zsh
 
 # Install pipenv
 pip3 install --user \
@@ -23,12 +24,20 @@ curl "https://releases.hashicorp.com/terraform/0.12.26/terraform_0.12.26_linux_a
 
 # Install pyenv
 curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash
-echo 'export PATH="/home/vasko/.pyenv/bin:$PATH"' >>  ~/.bashrc
+ln -s ~/.pyenv/libexec/pyenv ~/.local/bin/pyenv
 echo 'eval "$(pyenv init -)"' >>  ~/.bashrc
 echo 'eval "$(pyenv virtualenv-init -)"'  ~/.bashrc
 
+# Set zsh to be default shell
+chsh -s $(which zsh)
+
 # Restart shell 
 exec $SHELL
+
+# Install ohmyzsh
+sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+echo 'eval "$(pyenv init -)"' >>  ~/.zshrc
+echo 'eval "$(pyenv virtualenv-init -)"'  ~/.zshrc
 
 # Install Python build dependencies
 sudo apt-get install -y --no-install-recommends \
@@ -48,5 +57,5 @@ sudo apt-get install -y --no-install-recommends \
 	libffi-dev \
 	liblzma-dev
 
-pyenv install 3.8.3 && pyenv global 3.8.3
+pyenv install 3.6.11 && pyenv global 3.6.11
 
